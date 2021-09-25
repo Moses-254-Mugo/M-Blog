@@ -1,7 +1,9 @@
+from app.auth import forms
 from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
 from . import login_manager
+from datetime import datetime
 
 
 
@@ -16,10 +18,11 @@ class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),unique = True,index = True)
-    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     password_secure = db.Column(db.String(255))
+    blogs = db.relationship('Blog', backref ='user', passive_deletes=True,lazy = "dynamic")
+    comments = db.relationship('Comment', backref ='user' , passive_deletes=True,  lazy ="dynamic")
 
 
 
@@ -41,5 +44,35 @@ class User(UserMixin,db.Model):
     def __repr__(self):
         return f'User {self.username}'
 
+
+class Comment(db.Model):
+    __tablename__ = 'comments'
+
+
+    id = db.Column(db.Integer,primary_key = True)
+    comment = db.Column(db.String(500))
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+    pitch = db.Column(db.Integer,db.ForeignKey("pitches.id"))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    @classmethod
+    def get_comments(cls,pitch):
+        comments = Comment.query.filter_by(pitch_id=pitch).all()
+        return comments
+
+    @classmethod
+    def get_comments(cls, blog_id):
+        comments = Comment.query.filter_by(blog_id=blog_id).all()
+        return comments
+        
+    def delete_comment(self):
+        db.session.delete(self)
+        db.session.commit()
+    def __repr__(self):
+        return f'Comments: {self.comment}'
 
     
