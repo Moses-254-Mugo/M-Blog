@@ -68,7 +68,7 @@ def update_pic(uname):
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
 
-@main.route('/new_blogs', method=['GET', 'POST'])
+@main.route('/new_blogs', methods=['GET', 'POST'])
 @login_required
 def new_blogs():
     form = BlogsForm()
@@ -79,7 +79,7 @@ def new_blogs():
         return redirect(url_for('main.index'))
     return render_template("new_blogs.html", title='New Post', form=form, legend='New Post')
 
-@main.route('/delete/<int:id>', method=['GET', 'POST'])
+@main.route('/delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_blogs(id):
     blog = Blog.query.get_or_404(id)
@@ -88,7 +88,7 @@ def delete_blogs(id):
     db.session.delete(blog)
     db.session.commit()
 
-@main.route('/del_comment/<int:comment_id>', method=['GET', 'POST']) 
+@main.route('/del_comment/<int:comment_id>', methods=['GET', 'POST']) 
 @login_required
 def del_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
@@ -99,7 +99,7 @@ def del_comment(comment_id):
 
     # return redirect(url_for('main.'))
 
-@main.route('/vew_comment/<int:id>', method=['GET', 'POST'])
+@main.route('/vew_comment/<int:id>', methods=['GET', 'POST'])
 @login_required
 def view_comment(id):
     blog = Blog.query.get_or_404(id)
