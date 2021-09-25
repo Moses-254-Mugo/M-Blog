@@ -1,3 +1,4 @@
+from flask_sqlalchemy.model import Model
 from app.auth import forms
 from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
@@ -68,11 +69,38 @@ class Comment(db.Model):
     def get_comments(cls, blog_id):
         comments = Comment.query.filter_by(blog_id=blog_id).all()
         return comments
-        
+
     def delete_comment(self):
         db.session.delete(self)
         db.session.commit()
     def __repr__(self):
         return f'Comments: {self.comment}'
 
+class Blog(db, Model):
+
+    __tablename__ = 'blogs'
+
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
+    title_blog = db.Column(db.String(255), index=True)
+    description = db.Column(db.String(255), index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='CASCADE'), nullable=False)
     
+
+    def save_blog(self):
+        db.session.add(self)
+        db.session.commit(self)
+
+    @classmethod
+    def get_blogs(cls, id):
+        blogs = Blog.query.filter_by(id=id).all()
+        return blogs
+
+    @classmethod
+    def get_all_blogs(cls):
+        blogs = Blog.query.order_by('-id').all()
+        return blogs
+
+        
+    def __repr__(self):
+        return f'Blogs {self.blog_title}'
