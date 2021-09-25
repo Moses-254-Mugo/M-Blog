@@ -1,5 +1,4 @@
 from flask_sqlalchemy.model import Model
-from app.auth import forms
 from . import db
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin
@@ -14,6 +13,7 @@ def load_user(user_id):
 
 
 class User(UserMixin,db.Model):
+
     __tablename__ = 'users'
 
     id = db.Column(db.Integer,primary_key = True)
@@ -47,6 +47,7 @@ class User(UserMixin,db.Model):
 
 
 class Comment(db.Model):
+
     __tablename__ = 'comments'
 
 
@@ -76,10 +77,8 @@ class Comment(db.Model):
     def __repr__(self):
         return f'Comments: {self.comment}'
 
-class Blog(db, Model):
-
-    __tablename__ = 'blogs'
-
+class Blog(db.Model):
+    __tablename__ = 'mblog'
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, default=datetime.utcnow)
     title_blog = db.Column(db.String(255), index=True)
@@ -101,6 +100,6 @@ class Blog(db, Model):
         blogs = Blog.query.order_by('-id').all()
         return blogs
 
-        
+
     def __repr__(self):
         return f'Blogs {self.blog_title}'
