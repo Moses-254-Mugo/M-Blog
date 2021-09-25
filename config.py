@@ -3,7 +3,9 @@ class Config:
     '''
     General configuration parent class
     '''
-    pass
+    UPLOADED_PHOTOS_DEST ='app/static/photos'
+    
+    
 class ProdConfig(Config):
     '''
     Production  configuration child class
