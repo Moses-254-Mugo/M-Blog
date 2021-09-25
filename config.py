@@ -3,8 +3,12 @@ class Config:
     '''
     General configuration parent class
     '''
+    SECRET_KEY='kerugoya12'
     SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://moringa:Access@localhost/blog'
     UPLOADED_PHOTOS_DEST ='app/static/photos'
+    MAIL_USERNAME='moseskinyua12@gmail.com'
+    MAIL_PASSWORD='kerugoya12'
+    
 
 
     # simple mde  configurations

@@ -35,11 +35,16 @@ def logout():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(email = form.email.data, username = form.username.data,password = form.password.data)
-        db.session.add(user)
-        db.session.commit()
+        username = form.username.data
+        password = form.password.data
+        email = form.email.data
+        user = User(username = username, password = password, email= email)
+        user.set_password(password)
+        # mail_message("Welcome to M-Blog","email/welcome_user",user.email,user=user)
+        # user = User(email = form.email.data, username = form.username.data,password = form.password.data)
+        user.save_user()
 
-        mail_message("Welcome to M-Blog","email/welcome_user",user.email,user=user)
+        
 
         return redirect(url_for('auth.login'))
         title = "New Account"

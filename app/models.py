@@ -26,6 +26,9 @@ class User(UserMixin,db.Model):
     comments = db.relationship('Comment', backref ='user' , passive_deletes=True,  lazy ="dynamic")
 
 
+    def save_user(self):
+        db.session.add(self)
+        db.session.commit()
 
 
     @property
@@ -34,11 +37,14 @@ class User(UserMixin,db.Model):
 
     @password.setter
     def password(self, password):
-            self.pass_secure = generate_password_hash(password)
+            self.password_secure = generate_password_hash(password)
 
+    def set_password(self,password):
+        hashed_password = generate_password_hash(password)
+        self.password = hashed_password
 
     def verify_password(self,password):
-            return check_password_hash(self.pass_secure,password)
+            return check_password_hash(self.password_secure,password)
 
 
 
@@ -54,7 +60,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     comment = db.Column(db.String(500))
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    pitch = db.Column(db.Integer,db.ForeignKey("pitches.id"))
+    pitch = db.Column(db.Integer,db.ForeignKey("mblog.id"))
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def save_comment(self):
