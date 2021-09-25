@@ -23,7 +23,7 @@ class User(UserMixin,db.Model):
     profile_pic_path = db.Column(db.String())
     password_secure = db.Column(db.String(255))
     blogs = db.relationship('Blog', backref ='user', passive_deletes=True,lazy = "dynamic")
-    comments = db.relationship('Comment', backref ='user' , passive_deletes=True,  lazy ="dynamic")
+    comment = db.relationship('Comment', backref ='user' , passive_deletes=True,  lazy ="dynamic")
 
 
     def save_user(self):
@@ -60,7 +60,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     comment = db.Column(db.String(500))
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    pitch = db.Column(db.Integer,db.ForeignKey("mblog.id"))
+    blog_id = db.Column(db.Integer,db.ForeignKey("blogs.id"))
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def save_comment(self):
@@ -68,8 +68,8 @@ class Comment(db.Model):
         db.session.commit()
     
     @classmethod
-    def get_comments(cls,pitch):
-        comments = Comment.query.filter_by(pitch_id=pitch).all()
+    def get_comments(cls,blog_id):
+        comments = Comment.query.filter_by(blog_id=blog_id).all()
         return comments
 
     @classmethod
@@ -80,6 +80,7 @@ class Comment(db.Model):
     def delete_comment(self):
         db.session.delete(self)
         db.session.commit()
+        
     def __repr__(self):
         return f'Comments: {self.comment}'
 
