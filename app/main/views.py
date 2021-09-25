@@ -19,8 +19,9 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
+    title = 'Welcome to M-Blog Online Website'
     quotes = get_quotes()
-    return render_template('index.html', quotes = quotes)
+    return render_template('index.html',title = title, quotes = quotes)
 
 
 @main.route('/user/<uname>')

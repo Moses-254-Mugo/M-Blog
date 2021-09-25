@@ -7,8 +7,11 @@
         <div class="row">
             <div class="col-sm-2"></div>
             <div class="col-sm-8">
-                <h3 class="text-center">{{quotes.quote}}</h3>
+                <div class="quotes">
+                    <h1 class="text-center">{{title}}</h1>
+                    <h3 class="text-center">{{quotes.quote}}</h3>
                 <h5 class="text-center">~{{quotes.author}}~</h5>
+                </div>
             </div>
             <div class="col-sm-2"></div>
             
@@ -21,6 +24,10 @@
         color: #000;
         background-repeat: no-repeat;
         background-size: cover;
+        background-color: lavender;
+    }
+    .quotes{
+        margin-top: 25%;
     }
 </style>
 
