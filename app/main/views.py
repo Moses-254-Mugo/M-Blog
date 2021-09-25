@@ -5,7 +5,7 @@ from app import quotes
 from . import main
 from .forms import ReviewForm, UpdateProfile
 from flask_login import login_required, current_user
-from ..models import User,Blog
+from ..models import Comment, User,Blog
 from .. import db,photos
 import markdown2  
 from app.main.forms import BlogsForm
@@ -79,3 +79,20 @@ def new_blogs():
         return redirect(url_for('main.index'))
     return render_template("new_blogs.html", title='New Post', form=form, legend='New Post')
 
+@main.route('/delete/<int:id>', method=['GET', 'POST'])
+@login_required
+def delete_blogs(id):
+    blog = Blog.query.get_or_404(id)
+    if blog.user != current_user:
+        abort(403)
+    db.session.delete(blog)
+    db.session.commit()
+
+@main.route('/del_comment/<int:comment_id>', method=['GET', 'POST']) 
+@login_required
+def del_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    if (comment.user.id) != current_user.id:
+        abort(403)
+    db.session.delete(comment)
+    db.session.commit()
