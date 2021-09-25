@@ -65,3 +65,14 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+@main.route('/new_blogs', method=['GET', 'POST'])
+@login_required
+def new_blogs():
+    form = BlogsForm()
+    if form
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user = user)

@@ -17,11 +17,11 @@ class UpdateProfile(FlaskForm):
     bio = TextAreaField('Tell us about you.',validators = [Required()])
     submit = SubmitField('Submit')
 
-class Blog_Form(FlaskForm):
+class BlogsForm(FlaskForm):
     title_blog = StringField('Title')
     description = TextAreaField('Write a Descritpion', validators=[Required()])
     submit = SubmitField('submit')
 
-class Comment_Form(FlaskForm):
+class CommentForm(FlaskForm):
     Comment = TextAreaField('Write a comment', validators=[Required()])
     submit = SubmitField('Submit')
