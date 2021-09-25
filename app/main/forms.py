@@ -1,6 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField,TextAreaField,SubmitField
 from wtforms.validators import Required
+from wtforms.fields.core import SelectField
+from ..models import User
+
 
 class ReviewForm(FlaskForm):
 
