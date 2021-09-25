@@ -110,3 +110,9 @@ def view_comment(id):
         new_comment.save_comment()
         
     return render_template('view_comment.html', blog=blog, blog_comments = blog_comment, comment_form= comment_form)
+
+@main.route('/allblogs', methods=['GET', 'POST'])
+@login_required
+def allblogs():
+    blogs = Blog.query.all()
+    return render_template('my_blogs.html', blogs = blogs)
