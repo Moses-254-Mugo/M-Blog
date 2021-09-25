@@ -1,12 +1,14 @@
-from flask import render_template,request, redirect, url_for,abort
+from flask import render_template,request, redirect, url_for,abort,flash
+import flask_bootstrap
 
 from app import quotes
 from . import main
 from .forms import ReviewForm, UpdateProfile
 from flask_login import login_required, current_user
-from ..models import User
+from ..models import User,Blog
 from .. import db,photos
 import markdown2  
+from app.main.forms import BlogsForm
 from app.quotes import get_quotes
 
 
@@ -70,9 +72,10 @@ def update_pic(uname):
 @login_required
 def new_blogs():
     form = BlogsForm()
-    if form
+    if form.validate_on_submit():
+        blog = Blog(title= form.title.data, content=form.content.data, author=current_user)
+        blog.save()
+        flash('Your post has been created!', 'Success')
+        return redirect(url_for('main.index'))
+    return render_template("new_blogs.html", title='New Post', form=form, legend='New Post')
 
-    if user is None:
-        abort(404)
-
-    return render_template("profile/profile.html", user = user)

@@ -7,4 +7,4 @@ def get_quotes():
     if response.status_code == 200:
         print(response.json())
         return response.json()
-get_quotes()
+# get_quotes()
