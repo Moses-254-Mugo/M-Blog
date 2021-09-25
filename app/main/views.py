@@ -3,7 +3,7 @@ import flask_bootstrap
 
 from app import quotes
 from . import main
-from .forms import ReviewForm, UpdateProfile
+from .forms import CommentForm, ReviewForm, UpdateProfile
 from flask_login import login_required, current_user
 from ..models import Comment, User,Blog
 from .. import db,photos
@@ -96,3 +96,17 @@ def del_comment(comment_id):
         abort(403)
     db.session.delete(comment)
     db.session.commit()
+
+    # return redirect(url_for('main.'))
+
+@main.route('/vew_comment/<int:id>', method=['GET', 'POST'])
+@login_required
+def view_comment(id):
+    blog = Blog.query.get_or_404(id)
+    blog_comment = Comment.query.filter_by(blog_id=id).all()
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+        new_comment = Comment(blog_id=id, comment=comment_form.comment.data, user=current_user)
+        new_comment.save_comment()
+        
+    return render_template('view_comment.html', blog=blog, blog_comments = blog_comment, comment_form= comment_form)
