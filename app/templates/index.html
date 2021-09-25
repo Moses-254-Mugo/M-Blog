@@ -2,10 +2,26 @@
 
 {% block content %}
 
-<div class="contianer">
-    <div class="row">
-        <h1>{{quotes.quote}}</h1>
-        <p>{{quotes.author}}</p>
+<body>
+    <div class="contianer">
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <h3 class="text-center">{{quotes.quote}}</h3>
+                <h5 class="text-center">~{{quotes.author}}~</h5>
+            </div>
+            <div class="col-sm-2"></div>
+            
+        </div>
     </div>
-</div>
+</body>
+<style>
+    body{
+        background: url(https://pixabay.com/photos/young-girl-smelling-flowers-1149701/);
+        color: #000;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+
 {% endblock%}
