@@ -1,4 +1,5 @@
 export  SECRET_KEY='kerugoya'
-export MAIL_USERNAME=os.environ.get("MAIL_USERNAME")
-export MAIL_PASSWORD=os.environ.get("MAIL_PASSWORD")
+export MAIL_USERNAME='moseskinyua12@gmail.com'
+export MAIL_PASSWORD='kerugoya12'
+
 python3.8 manage.py server

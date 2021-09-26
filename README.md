@@ -54,8 +54,21 @@ After downloading
 
 
 ## BDD(Beahviour Driven Development)
-|Dog's Name|  Dog's Age|
-| :--------:| ---------|
+Login
+|  Inputs            | Description           
+|--------------------|---------------------|
+| Username           | Account username    |
+| Password           | Account password    |
+
+Signup inputs
+| Username         | Description      |
+|------------------|------------------|
+| Username         | Account username |  
+| Email            | User email       |   
+| Password         | Account password |
+| Confirm Password | Account password |
+
+Blog Inputs
 
 ## Support and contact details
 If you have nay question, want to contribute to the code? Please email me at moseskinyua12@gmail.com
