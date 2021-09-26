@@ -6,8 +6,8 @@ class Config:
     SECRET_KEY='kerugoya12'
     SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://moringa:Access@localhost/blog'
     UPLOADED_PHOTOS_DEST ='app/static/photos'
-    MAIL_USERNAME='moseskinyua12@gmail.com'
-    MAIL_PASSWORD='kerugoya12'
+    # MAIL_USERNAME='moseskinyua12@gmail.com'
+    # MAIL_PASSWORD='kerugoya12'
     
 
 
@@ -30,6 +30,7 @@ class ProdConfig(Config):
     Args:
         Config: The parent configuration class with General configuration settings
     '''
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     pass
 class TestConfig(Config):
     pass

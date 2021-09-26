@@ -37,7 +37,7 @@ def profile(uname):
 
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
-# @login_required
+@login_required
 def update_profile(uname):
     user = User.query.filter_by(username = uname).first()
     if user is None:
@@ -57,7 +57,7 @@ def update_profile(uname):
 
 
 @main.route('/user/<uname>/update/pic',methods= ['POST'])
-# @login_required
+@login_required
 def update_pic(uname):
     user = User.query.filter_by(username = uname).first()
     if 'photo' in request.files:
@@ -68,7 +68,7 @@ def update_pic(uname):
     return redirect(url_for('main.profile',uname=uname))
 
 @main.route('/new_blogs', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def new_blogs():
     form = BlogsForm()
     title='New Post'
@@ -83,9 +83,8 @@ def new_blogs():
     return render_template("new_blogs.html", form=form, legend=legend)
 
 
-# @main.route('/delete/<int:id>', methods=['GET', 'POST'])
 @main.route("/post/<int:id>/delete", methods=['POST', 'GET'])
-# @login_required
+@login_required
 def delete_blogs(id):
     blog = Blog.query.get_or_404(id)
     # blog = Blog.query.all()
@@ -107,7 +106,7 @@ def del_comment(comment_id):
     # return redirect(url_for('main.'))
 
 @main.route('/vew_comment/<int:id>', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def view_comment(id):
     blog = Blog.query.get_or_404(id)
     blog_comment = Comment.query.filter_by(blog_id=id).all()
@@ -119,7 +118,7 @@ def view_comment(id):
     return render_template('view_comment.html', blog=blog, blog_comments = blog_comment, comment_form= comment_form)
 
 @main.route('/allblogs', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def my_blogs():
     blogs = Blog.query.all()
     return render_template('my_blogs.html', blogs = blogs)

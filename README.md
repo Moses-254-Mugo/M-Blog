@@ -3,6 +3,11 @@
 ## Author
 Mugo Moses
 
+
+## Screenshot
+<img src="app/static/images/homepage.png">
+<img src="app/static/images/blogs.png">
+
 # Description
 M-Blog is a website where by one can create and share their own opinions and other users can read and comment on the quotes. M-Blog als generated random quotes that inspire users.
 ## Requirements 
@@ -47,8 +52,10 @@ After downloading
 7. As a writer, I would like to create a blog from the application.
 8. As a writer, I would like to update or delete blogs I have created. 
 
-BDD(Beahviour Driven Development)
 
+## BDD(Beahviour Driven Development)
+|Dog's Name|  Dog's Age|
+| :--------:| ---------|
 
 ## Support and contact details
 If you have nay question, want to contribute to the code? Please email me at moseskinyua12@gmail.com
