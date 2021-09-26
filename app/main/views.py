@@ -1,6 +1,5 @@
-from flask import render_template,request, redirect, url_for,abort,flash
+from flask import render_template,request, redirect, url_for,abort,flash, session
 import flask_bootstrap
-
 from app import quotes
 from . import main
 from .forms import CommentForm, ReviewForm, UpdateProfile
@@ -38,7 +37,7 @@ def profile(uname):
 
 
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
-@login_required
+# @login_required
 def update_profile(uname):
     user = User.query.filter_by(username = uname).first()
     if user is None:
@@ -58,7 +57,7 @@ def update_profile(uname):
 
 
 @main.route('/user/<uname>/update/pic',methods= ['POST'])
-@login_required
+# @login_required
 def update_pic(uname):
     user = User.query.filter_by(username = uname).first()
     if 'photo' in request.files:
@@ -69,27 +68,35 @@ def update_pic(uname):
     return redirect(url_for('main.profile',uname=uname))
 
 @main.route('/new_blogs', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def new_blogs():
     form = BlogsForm()
+    title='New Post'
+    legend = 'New Post'
+    # session['username'] = request.form['username']
+
     if form.validate_on_submit():
-        blog = Blog(title= form.title.data, content=form.content.data, author=current_user)
-        blog.save()
+        blog = Blog(title_blog= form.title_blog.data, description=form.description.data)
+        blog.save_blog()
         flash('Your post has been created!', 'Success')
         return redirect(url_for('main.index'))
-    return render_template("new_blogs.html", title='New Post', form=form, legend='New Post')
+    return render_template("new_blogs.html", form=form, legend=legend)
 
-@main.route('/delete/<int:id>', methods=['GET', 'POST'])
-@login_required
+
+# @main.route('/delete/<int:id>', methods=['GET', 'POST'])
+@main.route("/post/<int:id>/delete", methods=['POST', 'GET'])
+# @login_required
 def delete_blogs(id):
     blog = Blog.query.get_or_404(id)
-    if blog.user != current_user:
-        abort(403)
-    db.session.delete(blog)
-    db.session.commit()
+    # blog = Blog.query.all()
+    # if blog.user != current_user:
+    #     abort(403)
+    blog.delete_blog()
+    return redirect(url_for('main.index'))
+
 
 @main.route('/del_comment/<int:comment_id>', methods=['GET', 'POST']) 
-@login_required
+# @login_required
 def del_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
     if (comment.user.id) != current_user.id:
@@ -100,7 +107,7 @@ def del_comment(comment_id):
     # return redirect(url_for('main.'))
 
 @main.route('/vew_comment/<int:id>', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def view_comment(id):
     blog = Blog.query.get_or_404(id)
     blog_comment = Comment.query.filter_by(blog_id=id).all()
@@ -112,7 +119,7 @@ def view_comment(id):
     return render_template('view_comment.html', blog=blog, blog_comments = blog_comment, comment_form= comment_form)
 
 @main.route('/allblogs', methods=['GET', 'POST'])
-@login_required
-def allblogs():
+# @login_required
+def my_blogs():
     blogs = Blog.query.all()
     return render_template('my_blogs.html', blogs = blogs)

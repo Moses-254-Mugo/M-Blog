@@ -7,6 +7,7 @@ from wtforms.fields.core import SelectField
 from ..models import Comment, User
 
 
+
 class ReviewForm(FlaskForm):
 
     title = StringField('Review title',validators=[Required()])

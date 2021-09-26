@@ -60,7 +60,7 @@ class Comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     comment = db.Column(db.String(500))
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    blog_id = db.Column(db.Integer,db.ForeignKey("blogs.id"))
+    blog_id = db.Column(db.Integer,db.ForeignKey("mblog.id"))
     date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def save_comment(self):
@@ -90,13 +90,16 @@ class Blog(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
     title_blog = db.Column(db.String(255), index=True)
     description = db.Column(db.String(255), index=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='CASCADE'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='CASCADE'), nullable=True)
     
 
     def save_blog(self):
         db.session.add(self)
-        db.session.commit(self)
+        db.session.commit()
 
+    def delete_blog(self):
+        db.session.delete(self)
+        db.session.commit()
     @classmethod
     def get_blogs(cls, id):
         blogs = Blog.query.filter_by(id=id).all()
