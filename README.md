@@ -69,8 +69,7 @@ Signup inputs
 | Confirm Password | Account password |
 
 Blog Inputs
-
-## Support and contact details
+# Support and contact details
 If you have nay question, want to contribute to the code? Please email me at moseskinyua12@gmail.com
 
 # Contributors 
